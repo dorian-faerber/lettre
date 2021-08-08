@@ -113,7 +113,7 @@ use smtp::client::Client;
 use smtp::client::net::ClientTlsParameters;
 use smtp::commands::*;
 use smtp::error::{Error, SmtpResult};
-use smtp::client::net::DEFAULT_TLS_PROTOCOLS;
+//use smtp::client::net::DEFAULT_TLS_PROTOCOLS;
 use smtp::extension::{ClientId, Extension, MailBodyParameter, MailParameter, ServerInfo};
 use std::io::Read;
 use std::net::{SocketAddr, ToSocketAddrs};
@@ -324,8 +324,8 @@ impl<'a> SmtpTransport {
     /// to validate TLS certificates.
     pub fn simple_builder(domain: String) -> Result<SmtpTransportBuilder, Error> {
 
-        let mut tls_builder = TlsConnector::builder()?;
-        tls_builder.supported_protocols(DEFAULT_TLS_PROTOCOLS)?;
+        let tls_builder = TlsConnector::builder();
+        //tls_builder.supported_protocols(DEFAULT_TLS_PROTOCOLS)?;
 
         let tls_parameters = ClientTlsParameters::new(
             domain.clone(),
@@ -406,7 +406,7 @@ impl<'a> SmtpTransport {
 
 impl<'a, T: Read + 'a> EmailTransport<'a, T, SmtpResult> for SmtpTransport {
     /// Sends an email
-    #[cfg_attr(feature = "cargo-clippy", allow(match_same_arms, cyclomatic_complexity))]
+    //#[cfg_attr(feature = "cargo-clippy", allow(match_same_arms, cyclomatic_complexity))]
     fn send<U: SendableEmail<'a, T> + 'a>(&mut self, email: &'a U) -> SmtpResult {
 
         // Extract email information

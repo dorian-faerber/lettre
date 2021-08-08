@@ -170,7 +170,7 @@ impl<S: Connector + Write + Read + Timeout + Debug> Client<S> {
     }
 
     /// Checks if the server is connected using the NOOP SMTP command
-    #[cfg_attr(feature = "cargo-clippy", allow(wrong_self_convention))]
+    //#[cfg_attr(feature = "cargo-clippy", allow(wrong_self_convention))]
     pub fn is_connected(&mut self) -> bool {
         self.smtp_command(NoopCommand).is_ok()
     }

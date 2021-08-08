@@ -1,4 +1,4 @@
-#![feature(test)]
+/*#![feature(test)]
 
 extern crate lettre;
 extern crate test;
@@ -42,3 +42,4 @@ fn bench_reuse_send(b: &mut test::Bencher) {
     });
     sender.close()
 }
+*/

@@ -101,7 +101,7 @@ impl Display for Mechanism {
 
 impl Mechanism {
     /// Does the mechanism supports initial response
-    #[cfg_attr(feature = "cargo-clippy", allow(match_same_arms))]
+    //#[cfg_attr(feature = "cargo-clippy", allow(match_same_arms))]
     pub fn supports_initial_response(&self) -> bool {
         match *self {
             Mechanism::Plain => true,

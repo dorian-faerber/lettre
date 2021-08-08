@@ -441,7 +441,7 @@ impl PartBuilder {
 
     /// Adds a `ContentType` header with the given MIME type
     pub fn set_content_type(&mut self, content_type: Mime) {
-        self.add_header(("Content-Type", format!("{}", content_type).as_ref()));
+        self.add_header(("Content-Type", &format!("{}", content_type)));
     }
 
     /// Adds a child part
@@ -681,7 +681,7 @@ impl EmailBuilder {
         self.message.set_body(body);
         self.message.add_header((
             "Content-Type",
-            format!("{}", mime::TEXT_PLAIN_UTF_8).as_ref(),
+            &format!("{}", mime::TEXT_PLAIN_UTF_8),
         ));
     }
 
@@ -696,7 +696,7 @@ impl EmailBuilder {
         self.message.set_body(body);
         self.message.add_header((
             "Content-Type",
-            format!("{}", mime::TEXT_HTML).as_ref(),
+            &format!("{}", mime::TEXT_HTML),
         ));
     }
 
@@ -723,13 +723,13 @@ impl EmailBuilder {
             .body(body_text)
             .header((
                 "Content-Type",
-                format!("{}", mime::TEXT_PLAIN_UTF_8).as_ref(),
+                &format!("{}", mime::TEXT_PLAIN_UTF_8),
             ))
             .build();
 
         let html = PartBuilder::new()
             .body(body_html)
-            .header(("Content-Type", format!("{}", mime::TEXT_HTML).as_ref()))
+            .header(("Content-Type", &format!("{}", mime::TEXT_HTML)))
             .build();
 
         alternate.add_child(text);
@@ -773,7 +773,7 @@ impl EmailBuilder {
         }
         // Add the sender header, if any.
         if let Some(ref v) = self.sender_header {
-            self.message.add_header(("Sender", v.to_string().as_ref()));
+            self.message.add_header(("Sender", &v.to_string()));
         }
         // Calculate the envelope
         let envelope = match self.envelope {
@@ -856,7 +856,7 @@ impl EmailBuilder {
         if !self.date_issued {
             self.message.add_header((
                 "Date",
-                Tm::rfc822z(&now()).to_string().as_ref(),
+                &Tm::rfc822z(&now()).to_string(),
             ));
         }
 

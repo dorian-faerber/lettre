@@ -39,13 +39,13 @@ pub enum Error {
 
 impl Display for Error {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), fmt::Error> {
-        fmt.write_str(self.description())
+        fmt.write_str(&self.to_string())
     }
 }
 
 impl StdError for Error {
-    #[cfg_attr(feature = "cargo-clippy", allow(match_same_arms))]
-    fn description(&self) -> &str {
+    //#[cfg_attr(feature = "cargo-clippy", allow(match_same_arms))]
+    /*fn description(&self) -> &str {
         match *self {
             // Try to display the first line of the server's response that usually
             // contains a short humanly readable error message
@@ -62,21 +62,21 @@ impl StdError for Error {
                 }
             }
             ResponseParsing(err) => err,
-            ChallengeParsing(ref err) => err.description(),
-            Utf8Parsing(ref err) => err.description(),
+            ChallengeParsing(ref err) => &err.to_string(),
+            Utf8Parsing(ref err) => &err.to_string(),
             Resolution => "could not resolve hostname",
             Client(err) => err,
-            Io(ref err) => err.description(),
-            Tls(ref err) => err.description(),
+            Io(ref err) => &err.to_string(),
+            Tls(ref err) => &err.to_string(),
         }
-    }
+    }*/
 
-    fn cause(&self) -> Option<&StdError> {
+    fn cause(&self) -> Option<&dyn StdError> {
         match *self {
-            ChallengeParsing(ref err) => Some(&*err as &StdError),
-            Utf8Parsing(ref err) => Some(&*err as &StdError),
-            Io(ref err) => Some(&*err as &StdError),
-            Tls(ref err) => Some(&*err as &StdError),
+            ChallengeParsing(ref err) => Some(&*err as &dyn StdError),
+            Utf8Parsing(ref err) => Some(&*err as &dyn StdError),
+            Io(ref err) => Some(&*err as &dyn StdError),
+            Tls(ref err) => Some(&*err as &dyn StdError),
             _ => None,
         }
     }

@@ -20,19 +20,19 @@ pub enum Error {
 
 impl Display for Error {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), fmt::Error> {
-        fmt.write_str(self.description())
+        fmt.write_str(&self.to_string())
     }
 }
 
 impl StdError for Error {
-    fn description(&self) -> &str {
+    /*fn description(&self) -> &str {
         match *self {
             MissingFrom => "the sender is missing",
             MissingTo => "the recipient is missing",
             CannotParseFilename => "the attachment filename could not be parsed",
-            Io(ref err) => err.description(),
+            Io(ref err) => &err.to_string(),
         }
-    }
+    }*/
 }
 
 impl From<io::Error> for Error {

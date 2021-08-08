@@ -19,23 +19,23 @@ pub enum Error {
 
 impl Display for Error {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), fmt::Error> {
-        fmt.write_str(self.description())
+        fmt.write_str(&self.to_string())
     }
 }
 
 impl StdError for Error {
-    fn description(&self) -> &str {
+    /*fn description(&self) -> &str {
         match *self {
             Client(err) => err,
-            Io(ref err) => err.description(),
-            JsonSerialization(ref err) => err.description(),
+            Io(ref err) => &err.to_string(),
+            JsonSerialization(ref err) => &err.to_string(),
         }
-    }
+    }*/
 
-    fn cause(&self) -> Option<&StdError> {
+    fn cause(&self) -> Option<&dyn StdError> {
         match *self {
-            Io(ref err) => Some(&*err as &StdError),
-            JsonSerialization(ref err) => Some(&*err as &StdError),
+            Io(ref err) => Some(&*err as &dyn StdError),
+            JsonSerialization(ref err) => Some(&*err as &dyn StdError),
             _ => None,
         }
     }
